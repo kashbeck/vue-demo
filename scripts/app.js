@@ -1,4 +1,4 @@
-/*global Vue*/
+/*global Vue, $*/
 
 var store = {
 	state: {
@@ -20,7 +20,7 @@ var app = new Vue({
 		searchQuery: '',
 		gridColumns: ['name', 'power', 'age', 'country'],
 		gridData: [
-			{ name: 'Chuck Norris', power: Infinity, age: 52, country: 'USA' },
+			{ name: 'Chuck Norris', power: 6000, age: 52, country: 'USA' },
 			{ name: 'Bruce Lee', power: 9000, age: 66, country: 'China' },
 			{ name: 'Jackie Chan', power: 7000, age: 50, country: 'China' },
 			{ name: 'Jet Li', power: 8000, age: 52, country: 'China' }
@@ -44,13 +44,15 @@ var app = new Vue({
 					current: store.state.filters.power
 				}
 			]
-		},
-		sharedState: store.state
+		}
 	},
 	methods: {
 		changedFilter: function(event) {
-			store.updateFilter(event.filterId, event.filterData);
-			store.updateFilter('power', 'hello');
+			this.config.filters[event.filterId] = event.filterData;
 		}
+	},
+	mounted: function() {
+		//use jQuery DataTable
+		$(this.$el).find('.filtered-table__table > table').DataTable();
 	}
 });

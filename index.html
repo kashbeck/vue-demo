@@ -11,16 +11,16 @@
 				<div id="app" class="filtered-table">
 					<div class="filtered-table__filters">
 					<div v-for="filter in config.filters">
-							<tbl-filter :config="filter" v-on:tbl-filter--change="changedFilter">
-							
+							<tbl-filter 
+								:config="filter"
+								v-on:filter-change="changedFilter">
 							</tbl-filter>
 					</div>
 					</div>
 					<div class="filtered-table__table">
 						<demo-grid
 							:data="gridData"
-							:columns="gridColumns"
-							:filter-key="searchQuery">
+							:columns="gridColumns">
 						</demo-grid>
 					</div>
 					
@@ -31,18 +31,14 @@
 					<table>
 						<thead>
 							<tr>
-								<th v-for="key in columns"
-									@click="sortBy(key)"
-									:class="{ active: sortKey == key }">
+								<th v-for="key in columns">
 									{{ key | capitalize }}
-									<span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
-									</span>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="entry in filteredData">
-								<td v-for="key in columns">
+							<tr v-for="entry in data">
+								<td v-for="key in columns" :data-order="entry[key]">
 									{{entry[key]}}
 								</td>
 							</tr>
@@ -57,15 +53,16 @@
 						</div>
 						<div class="tbl-filter__content" :class="{ 'tbl-filter__content--collapsed': collapsed }">
 							<div v-if="config.type == 'select'" v-for="option in config.options">
-								<input type="checkbox" :id="option.id" :name="config.id" :value="option.id" v-model="config.current" @change="changeSelect" />
+								<input type="checkbox" :id="option.id" :name="config.id" :value="option.id" v-model.sync="config.current" @change="changeSelect" />
 								<label :for="option.id">{{ option.text }}</label>
 							</div>
 							<div v-if="config.type == 'range'">
-								<input type="text" v-model="config.current" @change="changeValue" />	
+								<input type="text" v-model.sync="config.current" @change="changeValue" />	
 							</div>
 						</div>
 					</div>
 				</script>   <!-- end #tbl-filter -->
+			
 				
 				<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 				<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
