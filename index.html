@@ -2,6 +2,7 @@
 <html>
 		<head>
 				<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+				<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 				<link rel="stylesheet" type="text/css" href="./styles/styles.css">
 		</head>
 		
@@ -10,7 +11,7 @@
 				<!-- demo root element -->
 				<div id="app" class="filtered-table">
 					<div class="filtered-table__filters">
-					<div v-for="filter in config.filters">
+					<div v-for="(filter, filterName) in config.filters">
 							<tbl-filter 
 								:config="filter"
 								v-on:filter-change="changedFilter">
@@ -18,6 +19,13 @@
 					</div>
 					</div>
 					<div class="filtered-table__table">
+						<div>
+							<filter-summary
+								:filters="filterSummary"
+								v-on:filter-removed="removeFilter">
+								
+							</filter-summary>
+						</div>
 						<demo-grid
 							:data="gridData"
 							:columns="gridColumns">
@@ -62,13 +70,23 @@
 						</div>
 					</div>
 				</script>   <!-- end #tbl-filter -->
-			
+				
+				<script type="text/x-template" id="filter-summary">
+					<div class="filter-summary">
+						<span v-for="filter in filters" class="filter-summary__filter">
+							{{ filter.text }}
+							<span class="glyphicon glyphicon-remove" @click="removeFilter(filter)"></span>
+						</span>
+					</div>
+				</script>   <!-- end #tbl-filter -->
 				
 				<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
 				<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+				<script scr="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 				<script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
 				<script src="./scripts/vue-components/demo-grid.js"></script>
 				<script src="./scripts/vue-components/tbl-filter.js"></script>
+				<script src="./scripts/vue-components/filter-summary.js"></script>
 				<script src="./scripts/app.js"></script>
 				
 		</body>
