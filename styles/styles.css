@@ -1,0 +1,42 @@
+body {
+	font-family: Helvetica Neue, Arial, sans-serif;
+	font-size: 14px;
+	color: #444;
+}
+
+[v-clock] {
+	display: none;
+}
+
+.filtered-table {
+	display:flex;
+}
+
+.filtered-table__filters {
+	padding: 16px;
+	min-width: 250px;
+}
+
+.filtered-table__table {
+	flex: 1;
+	padding: 16px;
+}
+
+.tbl-filter {
+	margin-bottom: 12px;
+}
+
+.tbl-filter__header {
+	background-color: #aaa;
+	padding: 8px;
+	text-transform: uppercase
+}
+
+.tbl-filter__content {
+	border: 1px solid #aaa;
+	padding: 8px;
+}
+
+.tbl-filter__content--collapsed {
+	display: none;
+}

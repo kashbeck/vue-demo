@@ -1,2 +1,2 @@
-# vue-deom
+# vue-demo
 Vue Demo
