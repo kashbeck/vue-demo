@@ -13,3 +13,26 @@ Vue.component('demo-grid', {
 		}
 	}
 });
+
+
+/*
+<!-- component template -->
+<script type="text/x-template" id="grid-template">
+	<table>
+		<thead>
+			<tr>
+				<th v-for="key in columns">
+					{{ key | capitalize }}
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="entry in data">
+				<td v-for="key in columns" :data-order="entry[key]">
+					{{entry[key]}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</script>   <!-- end #grid-template -->
+*/

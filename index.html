@@ -26,33 +26,22 @@
 								
 							</filter-summary>
 						</div>
-						<demo-grid
-							:data="gridData"
-							:columns="gridColumns">
-						</demo-grid>
+						
+						<table></table>
+						
+						<div>
+							<input type="text" v-model="newPerson.name" placeholder="Name" />
+							<input type="text" v-model="newPerson.power" placeholder="Power" />
+							<input type="text" v-model="newPerson.age" placeholder="Age" />
+							<input type="text" v-model="newPerson.country" placeholder="Country" />
+							<button class="btn btn-primary" @click="addPerson">Add Person</button>
+						</div>
+						
 					</div>
 					
 				</div> <!-- end #demo -->
-				
-				<!-- component template -->
-				<script type="text/x-template" id="grid-template">
-					<table>
-						<thead>
-							<tr>
-								<th v-for="key in columns">
-									{{ key | capitalize }}
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="entry in data">
-								<td v-for="key in columns" :data-order="entry[key]">
-									{{entry[key]}}
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</script>   <!-- end #grid-template -->
+		
+		
 				
 				<script type="text/x-template" id="tbl-filter">
 					<div class="tbl-filter">
@@ -84,7 +73,7 @@
 				<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 				<script scr="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 				<script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
-				<script src="./scripts/vue-components/demo-grid.js"></script>
+				<!-- <script src="./scripts/vue-components/demo-grid.js"></script> --> 
 				<script src="./scripts/vue-components/tbl-filter.js"></script>
 				<script src="./scripts/vue-components/filter-summary.js"></script>
 				<script src="./scripts/app.js"></script>

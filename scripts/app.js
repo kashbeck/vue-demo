@@ -13,18 +13,11 @@ var store = {
 	}
 };
 
+
 // bootstrap the app
 var app = new Vue({
 	el: '#app',
 	data: {
-		searchQuery: '',
-		gridColumns: ['name', 'power', 'age', 'country'],
-		gridData: [
-			{ name: 'Chuck Norris', power: 6000, age: 52, country: 'USA' },
-			{ name: 'Bruce Lee', power: 9000, age: 66, country: 'China' },
-			{ name: 'Jackie Chan', power: 7000, age: 50, country: 'China' },
-			{ name: 'Jet Li', power: 8000, age: 52, country: 'China' }
-		],
 		config: {
 			filters: {
 				country: {
@@ -34,6 +27,7 @@ var app = new Vue({
 					current: store.state.filters.country,
 					options: [
 						{ id: 'China', text: 'China' },
+						{ id: 'Russia', text: 'Russia' },
 						{ id: 'USA', text: 'USA' }
 					]
 				},
@@ -44,7 +38,8 @@ var app = new Vue({
 					current: store.state.filters.power
 				}
 			}
-		}
+		},
+		newPerson: {}
 	},
 	computed: {
 		filterSummary: function() {
@@ -77,8 +72,23 @@ var app = new Vue({
 		}
 	},
 	methods: {
+		addPerson: function(event) {
+			var table = this.$dt.DataTable();
+			
+			if (this.newPerson && this.newPerson.name && this.newPerson.power && this.newPerson.age && this.newPerson.country) {
+				table.row.add({ name: this.newPerson.name, power: this.newPerson.power, age: this.newPerson.age, country: this.newPerson.country });
+				//table.clear();
+				table.draw();	
+				
+				this.newPerson = {};
+				this.newPerson.name = '';
+				this.newPerson.power = '';
+				this.newPerson.age = '';
+				this.newPerson.country = '';
+			}
+		},
 		changedFilter: function(event) {
-			//this.config.filters[event.filterId] = event.filterData;
+			//filter changed - rerun serach
 		},
 		removeFilter: function(filterObj) {
 			var filterConfig = this.config.filters[filterObj.filter];	
@@ -96,6 +106,22 @@ var app = new Vue({
 	},
 	mounted: function() {
 		//use jQuery DataTable
-		$(this.$el).find('.filtered-table__table > table').DataTable();
+		this.$dt = $(this.$el).find('.filtered-table__table > table');
+		this.$dt.DataTable({
+			columns: [
+				{ title: 'Name', data: 'name', render: function(data, type, row) { return data.toUpperCase(); } },
+				{ title: 'Power', data: 'power' },
+				{ title: 'Age', data: 'age' },
+				{ title: 'Country', data: 'country' }
+			],
+			data: [
+				{ name: 'Chuck Norris', power: 6000, age: 52, country: 'USA' },
+				{ name: 'Bruce Lee', power: 9000, age: 66, country: 'China' },
+				{ name: 'Jackie Chan', power: 7000, age: 50, country: 'China' },
+				{ name: 'Steven Segal', power: 6000, age: 58, country: 'Russia' },
+				{ name: 'Jet Li', power: 8000, age: 52, country: 'China' }
+			],
+			deferRender: true
+		});
 	}
 });
